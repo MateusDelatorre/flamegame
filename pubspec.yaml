@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   flame: ^1.16.0
   flame_tiled: ^1.19.0
+  flame_audio: ^2.10.1
 
 dev_dependencies:
   flutter_test:
@@ -62,9 +63,20 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/tiles/
-    - assets/images/
-    - assets/images/Terrain Variations/
+    - assets/tiles/map1.tmx
+    - assets/tiles/TS_Dirt.tsx
+    - assets/images/TS_Dirt.png
+    - assets/images/player/Char1/fall_16px.png
+    - assets/images/player/Char1/hit_16px.png
+    - assets/images/player/Char1/idle_16px.png
+    - assets/images/player/Char1/idle_swim_16px.png
+    - assets/images/player/Char1/pick_item_16px.png
+    - assets/images/player/Char1/pull_16px.png
+    - assets/images/player/Char1/push_16px.png
+    - assets/images/player/Char1/roll_16px.png
+    - assets/images/player/Char1/swim_16px.png
+    - assets/images/player/Char1/walk_16px.png
+    - assets/audio/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
