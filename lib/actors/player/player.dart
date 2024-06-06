@@ -129,10 +129,6 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
       KeyEvent event,
       Set<LogicalKeyboardKey> keysPressed,
       ) {
-    final isKeyDown = event is KeyDownEvent;
-    final isKeyUp = event is KeyUpEvent;
-    final isKeyPressed = event is KeyRepeatEvent;
-
 
     _isMoving = false;
     _direction.x = 0;
@@ -144,23 +140,6 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
       if(element == LogicalKeyboardKey.keyW) moveUp();
       if(element == LogicalKeyboardKey.keyS) moveDown();
     });
-
-    /*
-    if(isKeyPressed || isKeyDown){
-      if (event.logicalKey == LogicalKeyboardKey.keyA) {
-        moveLeft();
-      } else if(event.logicalKey == LogicalKeyboardKey.keyD) {
-        moveRight();
-      }
-      if(event.logicalKey == LogicalKeyboardKey.keyW) {
-        moveUp();
-      } else if(event.logicalKey == LogicalKeyboardKey.keyS) {
-        moveDown();
-      }
-      print('key: ${event.logicalKey} ${event.logicalKey.keyLabel}');
-    }
-
-     */
 
     return super.onKeyEvent(event, keysPressed);
   }
