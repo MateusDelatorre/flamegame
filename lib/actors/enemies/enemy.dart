@@ -3,8 +3,8 @@ import 'package:flamegame/actors/actor.dart';
 class Enemy extends Actor{
 
   Enemy({
-    super.actor = 'enemy',
-    super.character = 'enemy',
+    required super.actor,
+    required super.character,
     super.speed = 30,
     super.position
   });

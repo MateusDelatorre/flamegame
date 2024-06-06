@@ -18,10 +18,11 @@ class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
 
   Actor({
     position,
+    size,
     required this.character,
     required this.actor,
     this.speed = 30,
-  }) : super(size: Vector2(16, 16));
+  }) : super(size: size ?? Vector2(16, 16));
 
   String character;
   String actor;
@@ -46,13 +47,12 @@ class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
   @override
   Future<void> onLoad() async {
 
-    _loadAnimations();
+    loadAnimations();
 
     return super.onLoad();
   }
 
-  _loadAnimations(){
-
+  loadAnimations(){
     // idle
     SpriteSheet spriteSheet = SpriteSheet(
       image: game.images.fromCache('$actor/$character/idle_16px.png'),
@@ -73,10 +73,10 @@ class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
     walkUpAnimation = spriteSheet.createAnimation(row: 2, stepTime: _animationSpeed, to: 4);
     walkRightAnimation = spriteSheet.createAnimation(row: 3, stepTime: _animationSpeed, to: 4);
 
-    animation = idleLeftAnimation;
+    animation = idleDownAnimation;
   }
 
-  SpriteAnimation _spriteAnimation(String state, int amountPerRow, int amount) {
+  SpriteAnimation spriteAnimation(String state, int amountPerRow, int amount) {
     //print('player/$character/${state}_16px.png');
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('$actor/$character/${state}_16px.png'),
@@ -84,12 +84,12 @@ class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
         amount: amount,
         amountPerRow: amountPerRow,
         stepTime: _animationSpeed,
-        textureSize: Vector2.all(16),
+        textureSize: size,
       ),
     );
   }
 
-  SpriteAnimation _specialSpriteAnimation(String state, int amount) {
+  SpriteAnimation specialSpriteAnimation(String state, int amount) {
     return SpriteAnimation.fromFrameData(
       game.images.fromCache('$actor/$character/${state}_32.png'),
       SpriteAnimationData.sequenced(

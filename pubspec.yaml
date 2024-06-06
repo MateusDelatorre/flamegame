@@ -76,6 +76,27 @@ flutter:
     - assets/images/player/Char1/roll_16px.png
     - assets/images/player/Char1/swim_16px.png
     - assets/images/player/Char1/walk_16px.png
+    - assets/images/enemy/goblin/bow_16px.png
+    - assets/images/enemy/goblin/idle_16px.png
+    - assets/images/enemy/goblin/walk_16px.png
+    - assets/images/enemy/skeleton/idle_16px.png
+    - assets/images/enemy/skeleton/walk_16px.png
+    - assets/images/npc/calvo/idle_16px.png
+    - assets/images/npc/laila/idle_16px.png
+    - assets/images/objects/bridge_side.png
+    - assets/images/objects/bridge_vertical.png
+    - assets/images/objects/bush.png
+    - assets/images/objects/chest.png
+    - assets/images/objects/flower_blue.png
+    - assets/images/objects/flower_orange.png
+    - assets/images/objects/flower_pink.png
+    - assets/images/objects/pole.png
+    - assets/images/objects/quest_exclamation.png
+    - assets/images/objects/rock.png
+    - assets/images/objects/rock2.png
+    - assets/images/objects/shop.png
+    - assets/images/objects/sign.png
+    - assets/images/objects/tree.png
     - assets/audio/
   #   - images/a_dot_ham.jpeg
 

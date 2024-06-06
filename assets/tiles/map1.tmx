@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="3">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="22">
  <tileset firstgid="1" source="TS_Dirt.tsx"/>
  <layer id="1" name="floor" width="30" height="20">
   <data encoding="csv">
@@ -27,5 +27,22 @@
  </layer>
  <objectgroup id="2" name="spawnpoints">
   <object id="1" name="player" type="player" x="88" y="167"/>
+  <object id="3" name="goblin" type="goblin" x="167.5" y="66.5"/>
+  <object id="5" name="skeleton" type="skeleton" x="205" y="65"/>
+  <object id="6" name="calvo" type="calvo" x="169.5" y="127.5"/>
+  <object id="7" name="laila" type="laila" x="120.5" y="107"/>
+  <object id="8" name="tree" type="tree" x="267" y="113.5"/>
+  <object id="9" name="bush" type="bush" x="201" y="193.5"/>
+  <object id="10" name="chest" type="chest" x="265.5" y="196.5"/>
+  <object id="11" name="bridge_side" type="bridge_side" x="315.5" y="145"/>
+  <object id="12" name="bridge_vertical" type="bridge_vertical" x="124" y="256"/>
+  <object id="13" name="flower_blue" type="flower_blue" x="48" y="125"/>
+  <object id="14" name="flower_orange" type="flower_orange" x="70" y="54.5"/>
+  <object id="15" name="flower_pink" type="flower_pink" x="30" y="241.5"/>
+  <object id="16" name="pole" type="pole" x="365" y="110.5"/>
+  <object id="18" name="rock" type="rock" x="295" y="59.5"/>
+  <object id="19" name="rock2" type="rock2" x="135" y="200"/>
+  <object id="20" name="shop" type="shop" x="187" y="253.5"/>
+  <object id="21" name="sign" type="sign" x="333" y="248.5"/>
  </objectgroup>
 </map>

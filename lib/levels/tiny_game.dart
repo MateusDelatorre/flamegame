@@ -34,6 +34,11 @@ class TinyGame extends FlameGame with
   }
 
   _loadAllImages() async {
+    await images.load('enemy/goblin/bow_16px.png');
+    await images.load('enemy/goblin/idle_16px.png');
+    await images.load('enemy/goblin/walk_16px.png');
+    await images.load('enemy/skeleton/idle_16px.png');
+    await images.load('enemy/skeleton/walk_16px.png');
     await images.load('player/Char1/fall_16px.png');
     await images.load('player/Char1/hit_16px.png');
     await images.load('player/Char1/idle_16px.png');
@@ -44,5 +49,22 @@ class TinyGame extends FlameGame with
     await images.load('player/Char1/roll_16px.png');
     await images.load('player/Char1/swim_16px.png');
     await images.load('player/Char1/walk_16px.png');
+    await images.load('npc/laila/idle_16px.png');
+    await images.load('npc/calvo/idle_16px.png');
+
+    await images.load('objects/bridge_side.png');
+    await images.load('objects/bridge_vertical.png');
+    await images.load('objects/bush.png');
+    await images.load('objects/chest.png');
+    await images.load('objects/flower_blue.png');
+    await images.load('objects/flower_orange.png');
+    await images.load('objects/flower_pink.png');
+    await images.load('objects/pole.png');
+    await images.load('objects/quest_exclamation.png');
+    await images.load('objects/rock.png');
+    await images.load('objects/rock2.png');
+    await images.load('objects/shop.png');
+    await images.load('objects/sign.png');
+    await images.load('objects/tree.png');
   }
 }
