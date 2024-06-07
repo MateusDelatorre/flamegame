@@ -76,6 +76,16 @@ flutter:
     - assets/images/player/Char1/roll_16px.png
     - assets/images/player/Char1/swim_16px.png
     - assets/images/player/Char1/walk_16px.png
+    - assets/images/player/Char2/fall_16px.png
+    - assets/images/player/Char2/hit_16px.png
+    - assets/images/player/Char2/idle_16px.png
+    - assets/images/player/Char2/idle_swim_16px.png
+    - assets/images/player/Char2/pick_item_16px.png
+    - assets/images/player/Char2/pull_16px.png
+    - assets/images/player/Char2/push_16px.png
+    - assets/images/player/Char2/roll_16px.png
+    - assets/images/player/Char2/swim_16px.png
+    - assets/images/player/Char2/walk_16px.png
     - assets/images/enemy/goblin/bow_16px.png
     - assets/images/enemy/goblin/idle_16px.png
     - assets/images/enemy/goblin/walk_16px.png
