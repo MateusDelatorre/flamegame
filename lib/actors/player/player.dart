@@ -1,6 +1,8 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
+import 'package:flame/effects.dart';
 import 'package:flame/sprite.dart';
+import 'package:flamegame/actors/enemies/enemy.dart';
 import 'package:flutter/services.dart';
 import 'package:flamegame/actors/actor.dart';
 import 'package:flamegame/levels/tiny_game.dart';
@@ -31,8 +33,12 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
   ActorDirection direction = ActorDirection.down;
   PlayerState state = PlayerState.idle;
   final Vector2 _direction = Vector2.zero();
-  final double speed = 30;
+  final double speed = 60;
   bool _isMoving = false;
+  double life = 100;
+  bool canMove = true;
+  bool isSwimming = false;
+  bool isAnimationPlaying = false;
 
   // Player Animations
   final double _animationSpeed = 0.20;
@@ -80,6 +86,7 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
   Future<void> onLoad() async {
 
     _loadAnimations();
+    add(RectangleHitbox());
 
     return super.onLoad();
   }
@@ -87,41 +94,78 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
   @override
   void update(double dt) {
     super.update(dt);
-
     if(_isMoving) {
-      switch (direction) {
-        case ActorDirection.down:
-          animation = walkDownAnimation;
-          break;
-        case ActorDirection.left:
-          animation = walkLeftAnimation;
-          break;
-        case ActorDirection.up:
-          animation = walkUpAnimation;
-          break;
-        case ActorDirection.right:
-          animation = walkRightAnimation;
-          break;
-      }
-    } else {
-      switch (direction) {
-        case ActorDirection.down:
-          animation = idleDownAnimation;
-          break;
-        case ActorDirection.left:
-          animation = idleLeftAnimation;
-          break;
-        case ActorDirection.up:
-          animation = idleUpAnimation;
-          break;
-        case ActorDirection.right:
-          animation = idleRightAnimation;
-          break;
+      final displacement = _direction.normalized() * speed * dt;
+      position.add(displacement);
+    }else{
+      setState();
+    }
+    setAnimation();
+  }
+
+  setState(){
+    if(_direction.x == 0 && _direction.y == 0){
+      if(canMove){
+        state = PlayerState.idle;
       }
     }
+  }
 
-    final displacement = _direction.normalized() * speed * dt;
-    position.add(displacement);
+  setAnimation(){
+    switch(state){
+      case PlayerState.fall:
+        animation = fallingAnimation;
+        break;
+      case PlayerState.hit:
+        animation = hitAnimation;
+        break;
+      case PlayerState.idle:
+        setAnimationDirection(idleDownAnimation, idleLeftAnimation, idleUpAnimation, idleRightAnimation);
+        break;
+      case PlayerState.idleSwim:
+        setAnimationDirection(idleSwimDownAnimation, idleSwimLeftAnimation, idleSwimUpAnimation, idleSwimRightAnimation);
+        break;
+      case PlayerState.pickItem:
+        animation = pickItemAnimation;
+        break;
+      case PlayerState.pull:
+        setAnimationDirection(pullDownAnimation, pullLeftAnimation, pullUpAnimation, pullRightAnimation);
+        break;
+      case PlayerState.push:
+        setAnimationDirection(pushDownAnimation, pushLeftAnimation, pushUpAnimation, pushRightAnimation);
+        break;
+      case PlayerState.roll:
+        setAnimationDirection(rollDownAnimation, rollLeftAnimation, rollUpAnimation, rollRightAnimation);
+        break;
+      case PlayerState.swim:
+        setAnimationDirection(swimDownAnimation, swimLeftAnimation, swimUpAnimation, swimRightAnimation);
+        break;
+      case PlayerState.walk:
+        setAnimationDirection(walkDownAnimation, walkLeftAnimation, walkUpAnimation, walkRightAnimation);
+        break;
+    }
+  }
+
+  setAnimationDirection(
+      SpriteAnimation downAnimation,
+      SpriteAnimation leftAnimation,
+      SpriteAnimation upAnimation,
+      SpriteAnimation rightAnimation
+      ){
+    switch (direction) {
+      case ActorDirection.down:
+        animation = downAnimation;
+        break;
+      case ActorDirection.left:
+        animation = leftAnimation;
+        break;
+      case ActorDirection.up:
+        animation = upAnimation;
+        break;
+      case ActorDirection.right:
+        animation = rightAnimation;
+        break;
+    }
   }
 
   @override
@@ -134,12 +178,14 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
     _direction.x = 0;
     _direction.y = 0;
 
-    keysPressed.forEach((element) {
+    if(!canMove) return super.onKeyEvent(event, keysPressed);
+
+    for (var element in keysPressed) {
       if(element == LogicalKeyboardKey.keyA) moveLeft();
       if(element == LogicalKeyboardKey.keyD) moveRight();
       if(element == LogicalKeyboardKey.keyW) moveUp();
       if(element == LogicalKeyboardKey.keyS) moveDown();
-    });
+    }
 
     return super.onKeyEvent(event, keysPressed);
   }
@@ -170,6 +216,62 @@ class Player extends SpriteAnimationComponent with HasGameRef<TinyGame>,
     _direction.x = speed;
     state = PlayerState.walk;
     _isMoving = true;
+  }
+
+
+  @override
+  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
+    _isMoving = false;
+    if(other is Actor) {
+      if(other is Enemy) {
+
+        state = PlayerState.hit;
+        if(other.position.x > position.x) {
+          canMove = false;
+          add(MoveByEffect(
+            Vector2(-20, 0),
+            EffectController(duration: 0.2),
+            onComplete: () {
+              canMove = true;
+            },
+          ));
+        } else {
+          canMove = false;
+          add(MoveByEffect(
+            Vector2(20, 0),
+            EffectController(duration: 0.2),
+            onComplete: () {
+              canMove = true;
+            },
+          ));
+        }
+        if(other.position.y > position.y) {
+          canMove = false;
+          add(MoveByEffect(
+            Vector2(0, -20),
+            EffectController(duration: 0.2),
+            onComplete: () {
+              canMove = true;
+            },
+          ));
+        } else {
+          canMove = false;
+          add(MoveByEffect(
+            Vector2(0, 20),
+            EffectController(duration: 0.2),
+            onComplete: () {
+              canMove = true;
+            },
+          ));
+        }
+        life -= 10;
+      }
+    super.onCollision(intersectionPoints, other);
+    }
+  }
+
+  detectCollisionDirection(){
+
   }
 
   _loadAnimations(){

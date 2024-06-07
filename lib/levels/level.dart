@@ -13,17 +13,19 @@ class Level extends World{
   final String levelName;
   final Player player;
   late TiledComponent map;
+  List<PositionComponent> collisionBlocks = [];
 
   @override
   FutureOr<void> onLoad() async {
-    map = await TiledComponent.load('$levelName.tmx', Vector2(16, 16));
+    map = await TiledComponent.load('$levelName.tmx', Vector2(15, 15));
     add(map);
-    _spawnEntities();
+    spawnEntities();
+    addCollisions();
 
     return super.onLoad();
   }
 
-  _spawnEntities(){
+  spawnEntities(){
     final spawnPointsLayer = map.tileMap.getLayer<ObjectGroup>('spawnpoints');
 
     if (spawnPointsLayer != null) {
@@ -42,7 +44,7 @@ class Level extends World{
             add(skeleton);
             break;
           case 'player':
-            player.character = 'Char1';
+            player.character = 'Char2';
             player.position = Vector2(spawnPoint.x, spawnPoint.y);
             player.scale.x = 1;
             add(player);
@@ -129,34 +131,20 @@ class Level extends World{
       }
     }
   }
-/*
-  void _addCollisions() {
-    final collisionsLayer = level.tileMap.getLayer<ObjectGroup>('Collisions');
+
+  void addCollisions() {
+    final collisionsLayer = map.tileMap.getLayer<ObjectGroup>('collisions');
 
     if (collisionsLayer != null) {
       for (final collision in collisionsLayer.objects) {
-        switch (collision.class_) {
-          case 'Platform':
-            final platform = CollisionBlock(
-              position: Vector2(collision.x, collision.y),
-              size: Vector2(collision.width, collision.height),
-              isPlatform: true,
-            );
-            collisionBlocks.add(platform);
-            add(platform);
-            break;
-          default:
-            final block = CollisionBlock(
-              position: Vector2(collision.x, collision.y),
-              size: Vector2(collision.width, collision.height),
-            );
-            collisionBlocks.add(block);
-            add(block);
-        }
+        final block = PositionComponent(
+          position: Vector2(collision.x, collision.y),
+          size: Vector2(collision.width, collision.height),
+        );
+        collisionBlocks.add(block);
+        add(block);
       }
     }
-    player.collisionBlocks = collisionBlocks;
+    //player.collisionBlocks = collisionBlocks;
   }
-}*/
-
 }

@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import 'package:flame/sprite.dart';
 import 'package:flamegame/levels/tiny_game.dart';
@@ -14,7 +15,7 @@ enum ActorDirection {
   right
 }
 
-class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
+class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>, CollisionCallbacks{
 
   Actor({
     position,
@@ -48,6 +49,7 @@ class Actor extends SpriteAnimationComponent with HasGameRef<TinyGame>{
   Future<void> onLoad() async {
 
     loadAnimations();
+    add(RectangleHitbox());
 
     return super.onLoad();
   }
